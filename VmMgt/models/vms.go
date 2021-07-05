@@ -7,7 +7,7 @@ type VM struct {
 	CpuCores     int
 	MemorySizeMB int
 	Region       int // region id.
-	// allowed values: Runing, Shutdown, Provisioning, Deleted(in case some related data still required).
+	// allowed values: Runing, Shutingdown/Shutdown, Provisioning, Deleting/Deleted(in case some related data still required).
 	Status string // TODO: try to use enum like data instead of string.
 }
 

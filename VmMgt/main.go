@@ -10,8 +10,8 @@ func main() {
 
 	r.POST("/vms", controllers.Register)
 	r.GET("/vms/:name", controllers.Get)
-	r.GET("/vms", controllers.ListAll)
-	r.PATCH("/vms/:operation", controllers.UpdateStatus)
+	r.GET("/vms", controllers.List)
+	r.PATCH("/vms/:name/:operation", controllers.Operate)
 	r.DELETE("/vms/:name", controllers.Delete)
 	r.Run()
 }

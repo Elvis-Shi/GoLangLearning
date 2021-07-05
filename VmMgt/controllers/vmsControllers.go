@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -30,6 +31,8 @@ type DeleteInput struct {
 type ListAllInput struct {
 }
 
+var storage = CacheStorage{}
+
 func Register(c *gin.Context) {
 	var input RegisterInput
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -37,7 +40,6 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	storage := CacheStorage{}
 	vm, err := storage.Register(&input)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -48,27 +50,66 @@ func Register(c *gin.Context) {
 }
 
 func Get(c *gin.Context) {
-	// check if exists
+	name := c.Param("name")
+	// validation not required, since if name not provided, List API will be invoked instead.
 
-	// retrieve from storage.
+	vm, err := storage.Get(name)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, vm)
 }
 
-func UpdateStatus(c *gin.Context) {
-	// check if exists
+func List(c *gin.Context) {
+	vms, err := storage.List()
 
-	// check if current status available for update to the specified new status.
-}
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-func ListAll(c *gin.Context) {
-
+	c.JSON(http.StatusOK, vms)
 }
 
 func Delete(c *gin.Context) {
-	// check if exists
+	name := c.Param("name")
+	vm, err := storage.Delete(name)
 
-	// check status ok for deletion.
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-	// delete VM.
+	c.JSON(http.StatusOK, vm)
+}
 
-	// update storage
+func Operate(c *gin.Context) {
+	name := c.Param("name")
+	operation := c.Param("operation")
+
+	if name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Machine name is required."})
+		return
+	}
+
+	if operation == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Operation is required"})
+		return
+	}
+
+	if operation != "start" && operation != "shutdown" && operation != "reboot" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("Operation %v is not allowed.", operation)})
+	}
+
+	vm, err := storage.Operate(name, operation)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, vm)
 }
