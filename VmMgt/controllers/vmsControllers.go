@@ -5,36 +5,13 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"ssdd.com/vms/models"
 )
 
-type RegisterInput struct {
-	MachineName  string
-	ImageName    string
-	CpuCores     int
-	MemorySizeMB int
-	Region       int // region id.
-}
-
-type UpdateStatusInput struct {
-	MachineName string
-	Status      string
-}
-
-type GetInput struct {
-	MachineName string
-}
-
-type DeleteInput struct {
-	MachineName string
-}
-
-type ListAllInput struct {
-}
-
-var storage = CacheStorage{}
+var storage = models.CacheStorage{}
 
 func Register(c *gin.Context) {
-	var input RegisterInput
+	var input models.RegisterInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

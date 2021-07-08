@@ -1,29 +1,30 @@
-package controllers
+package models
 
 import (
 	"errors"
 	"fmt"
-
-	"ssdd.com/vms/models"
 )
 
 type VMStorage interface {
-	Register(input *RegisterInput) (models.VM, error) // TODO: is there any clever way instead of define all these different RegisterInput/Output?
-	Get(machineName string) (models.VM, error)
+	Register(input *RegisterInput) (VM, error) // TODO: is there any clever way instead of define all these different RegisterInput/Output?
+	Get(machineName string) (VM, error)
 	Delete(machineName string) error // TODO: what should Delete return?
 	List() error                     // TODO: what is arry in Go.
-	UpdateStatus(machineName string, status string) (models.VM, error)
+	UpdateStatus(machineName string, status string) (VM, error)
 }
 
-var vmsCache = make(map[string]*models.VM)
-var imagesCache = map[string]*models.VMImage{
-	"Ubuntu 14.04": &models.VMImage{ImageName: "Ubuntu 14.04", OS: "Ubuntu", Version: "14.04", SizeMB: 4000},
+// TODO: data access layer should be separated from business layer?
+
+// global in memory storage for VMs and images.
+var vmsCache = make(map[string]*VM)
+var imagesCache = map[string]*VMImage{
+	"Ubuntu 14.04": &VMImage{ImageName: "Ubuntu 14.04", OS: "Ubuntu", Version: "14.04", SizeMB: 4000},
 }
 
 type CacheStorage struct {
 }
 
-func (storage CacheStorage) Register(input *RegisterInput) (*models.VM, error) {
+func (storage CacheStorage) Register(input *RegisterInput) (*VM, error) {
 	// TODO: check authentication/authorization.
 	// TODO: log activity?
 
@@ -50,7 +51,7 @@ func (storage CacheStorage) Register(input *RegisterInput) (*models.VM, error) {
 
 	// Start VM privision in other thread.
 
-	vm := models.VM{
+	vm := VM{
 		MachineName:  input.MachineName,
 		Image:        *image,
 		IP:           "", // TODO: update when privision job done.
@@ -65,7 +66,7 @@ func (storage CacheStorage) Register(input *RegisterInput) (*models.VM, error) {
 	return &vm, nil
 }
 
-func (storage CacheStorage) Get(machineName string) (*models.VM, error) {
+func (storage CacheStorage) Get(machineName string) (*VM, error) {
 	// check if exists
 	vm, ok := vmsCache[machineName]
 	if !ok {
@@ -75,8 +76,8 @@ func (storage CacheStorage) Get(machineName string) (*models.VM, error) {
 	return vm, nil
 }
 
-func (storge CacheStorage) List() ([]*models.VM, error) {
-	vms := make([]*models.VM, 0, len(vmsCache))
+func (storge CacheStorage) List() ([]*VM, error) {
+	vms := make([]*VM, 0, len(vmsCache))
 	for _, value := range vmsCache {
 		vms = append(vms, value)
 	}
@@ -84,7 +85,7 @@ func (storge CacheStorage) List() ([]*models.VM, error) {
 	return vms, nil
 }
 
-func (storage CacheStorage) Delete(machineName string) (*models.VM, error) {
+func (storage CacheStorage) Delete(machineName string) (*VM, error) {
 	// check if exists
 	vm, ok := vmsCache[machineName]
 	if !ok {
@@ -100,7 +101,7 @@ func (storage CacheStorage) Delete(machineName string) (*models.VM, error) {
 	return vm, nil
 }
 
-func (storage CacheStorage) Operate(machineName string, operation string) (*models.VM, error) {
+func (storage CacheStorage) Operate(machineName string, operation string) (*VM, error) {
 	// check if exists
 	vm, ok := vmsCache[machineName]
 	if !ok {

@@ -18,7 +18,7 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	ssdd.com/vms/controllers v0.0.0-00010101000000-000000000000
-	ssdd.com/vms/models v0.0.0-00010101000000-000000000000 // indirect
+	ssdd.com/vms/models v0.0.0-00010101000000-000000000000
 )
 
 replace ssdd.com/vms/controllers => ./controllers

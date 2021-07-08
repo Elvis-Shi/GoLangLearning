@@ -17,3 +17,11 @@ type VMImage struct {
 	Version   string
 	SizeMB    int
 }
+
+type RegisterInput struct {
+	MachineName  string
+	ImageName    string
+	CpuCores     int
+	MemorySizeMB int
+	Region       int // region id.
+}
