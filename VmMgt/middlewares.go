@@ -1,13 +1,12 @@
 package main
 
 import (
-	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"ssdd.com/vms/models"
 )
-
 var auditStorage = models.FileAuditStorage{}
 
 func Audit() gin.HandlerFunc {
@@ -22,12 +21,19 @@ func Audit() gin.HandlerFunc {
 			Verb: c.Request.Method,
 			ResponseStatus: c.Writer.Status(),
 			Duration: time.Since(startTime),
+			ServiceId: c.GetString("ServiceId"),
 		}
 
-		err := auditStorage.Append(&auditLog)
+		auditStorage.Append(&auditLog)
+	}
+}
+
+func AssignServiceId() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Set("ServiceId", uuid.NewString());
+
+		c.Next()
 		
-		if err != nil {
-			log.Println("Audit log append failed:", err)
-		}
+		c.Header("ServiceId", c.GetString("ServiceId"));
 	}
 }

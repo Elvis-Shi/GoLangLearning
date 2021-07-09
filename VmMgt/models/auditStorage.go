@@ -7,6 +7,7 @@ import (
 )
 
 type AuditLog struct {
+	ServiceId string
 	StartTime      *time.Time
 	URI            string
 	Verb           string
@@ -25,11 +26,10 @@ type FileAuditStorage struct {
 // global handle of audit log variable.
 var auditLog, _ = os.OpenFile("Audit.log", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600) // TODO: what is 0600.
 
-func (storage FileAuditStorage) Append(log *AuditLog) error {
+func (storage FileAuditStorage) Append(log *AuditLog)  {
 	if auditLog == nil {
-		return fmt.Errorf("Failed to open audit log file.")
+		panic("Failed to open audit log file.")
 	}
 
-	auditLog.WriteString(fmt.Sprintf("%v\t%v\t%v\t%v\t%v\n", log.StartTime.Format("2006/01/02 03:04:05.99999pm"), log.URI, log.Verb, log.ResponseStatus, log.Duration.Nanoseconds()))
-	return nil
+	auditLog.WriteString(fmt.Sprintf("%v\t%v\t%v\t%v\t%v\t%v\n", log.StartTime.Format("2006/01/02 03:04:05.99999pm"), log.URI, log.Verb, log.ResponseStatus, log.Duration.Nanoseconds(), log.ServiceId))
 }

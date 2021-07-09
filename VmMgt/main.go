@@ -7,6 +7,7 @@ import (
 
 func main() {
 	r := gin.Default()
+	r.Use(AssignServiceId())
 	r.Use(Audit())
 	r.POST("/vms", controllers.Register)
 	r.GET("/vms/:name", controllers.Get)
