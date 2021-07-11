@@ -38,7 +38,7 @@ func (storage FileTraceStorage) Append(log *TraceLog)  {
 		panic("Failed to open trace log file.")
 	}
 
-	traceLog.WriteString(fmt.Sprintf("%v\t%v\t%v\n", time.Now().Format("2006/01/02 03:04:05.99999pm"), log.ServiceId, log.Level, log.Content))
+	traceLog.WriteString(fmt.Sprintf("%v\t%v\t%v\t%v\n", time.Now().Format("2006/01/02 03:04:05.99999pm"), log.ServiceId, log.Level, log.Content))
 }
 
 func Log(log *TraceLog) {

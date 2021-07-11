@@ -38,6 +38,7 @@ func Get(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, vm)
+	
 }
 
 func List(c *gin.Context) {

@@ -31,9 +31,6 @@ func Audit() gin.HandlerFunc {
 func AssignServiceId() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Set("ServiceId", uuid.NewString());
-
-		c.Next()
-		
 		c.Header("ServiceId", c.GetString("ServiceId"));
 	}
 }
