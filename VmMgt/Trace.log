@@ -1,0 +1,15 @@
+2021/07/09 01:25:05.90196am	e2f179ca-ab57-4b55-b181-38d7d63f8446	0
+%!(EXTRA string=Audit log append failed: Well)2021/07/10 06:02:25.9432pm	843db710-5dff-4a81-bb66-f696cfc6136c	1
+%!(EXTRA string=John Doe)2021/07/10 06:32:15.29671pm	ff13857f-ea43-4927-944a-88cc3cdd684b	1	Invalid header 'Authorization': 
+2021/07/10 06:34:23.50317pm	fe4f68f1-a023-4734-80e2-d11b13d94f23	1	Invalid header 'Authorization': 
+2021/07/10 06:36:10.21852pm	33b77839-a994-4b04-ba3c-76817412185c	1	Invalid authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.TR6X0-XlWDROIS4-XlZBNBePAfV97v3zQPIfBiwUnA. signature is invalid
+2021/07/10 06:37:36.20154pm	330738f8-9c9c-49a8-9741-38a7f5e1f445	1	Invalid authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIn0.Orhzx9TO5UY3yDszSj-kCbUe07l1BAiaxAFFJ73yxx0. signature is invalid
+2021/07/10 06:38:48.15577pm	601905a4-88c3-420f-8408-0c551ce1d521	1	Invalid authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIn0.Orhzx9TO5UY3yDszSj-kCbUe07l1BAiaxAFFJ73yxx0. signature is invalid
+2021/07/10 07:12:52.69639pm	b406cc8a-2405-42c4-a101-cf060f1fe6d4	1	Invalid header 'Authorization': 
+2021/07/18 04:55:46.3464pm	3d89882a-407d-412b-a9a4-920bfa1629ff	1	Invalid header 'Authorization': 
+2021/07/18 04:55:53.06373pm	8e440065-7808-4af2-b4fc-d1133f453b34	1	Invalid header 'Authorization': 
+2021/07/18 04:57:41.37071pm	fcd4a80e-09a4-42e1-bdd8-41ccf2c77a43	1	Invalid authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.0fWpx0K3bVmbyR6nzhxHBZ7fpM3IWglNDqGbCcYQOoE. signature is invalid
+2021/07/18 04:59:34.85721pm	3a279126-5a70-40cd-b329-89cd89a0e7a3	1	Invalid authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.0fWpx0K3bVmbyR6nzhxHBZ7fpM3IWglNDqGbCcYQOoE. signature is invalid
+2021/07/18 05:00:23.70587pm	4764e293-f4e0-43e7-9e38-39da56c1ddd1	1	Invalid authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.c6eY53ApHMqV3TBic_EANSpub-BFcYSLiRqycsYIbRE. signature is invalid
+2021/07/18 05:01:34.31149pm	074c7aad-a575-40e6-bbef-1508ef957ca6	1	Invalid authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.c6eY53ApHMqV3TBic_EANSpub-BFcYSLiRqycsYIbRE. signature is invalid
+2021/07/18 05:02:50.04375pm	85c10fad-dd31-40d8-8942-e2e051b22a7d	1	Invalid authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UifQ.c6eY53ApHMqV3TBic_EANSpub-BFcYSLiRqycsYIbRE. signature is invalid

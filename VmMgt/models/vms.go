@@ -25,3 +25,7 @@ type RegisterInput struct {
 	MemorySizeMB int
 	Region       int // region id.
 }
+
+type UpdateInput struct {
+	Status string
+}

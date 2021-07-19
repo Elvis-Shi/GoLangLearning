@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -64,25 +63,20 @@ func Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, vm)
 }
 
-func Operate(c *gin.Context) {
+func Update(c *gin.Context) {
 	name := c.Param("name")
-	operation := c.Param("operation")
-
 	if name == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Machine name is required."})
 		return
 	}
 
-	if operation == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Operation is required"})
+	var input models.UpdateInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if operation != "start" && operation != "shutdown" && operation != "reboot" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("Operation %v is not allowed.", operation)})
-	}
-
-	vm, err := storage.Operate(name, operation)
+	vm, err := storage.Update(name, &input)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

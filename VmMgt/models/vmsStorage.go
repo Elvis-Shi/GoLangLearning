@@ -101,24 +101,37 @@ func (storage CacheStorage) Delete(machineName string) (*VM, error) {
 	return vm, nil
 }
 
-func (storage CacheStorage) Operate(machineName string, operation string) (*VM, error) {
+func (storage CacheStorage) Update(machineName string, updateInput *UpdateInput) (*VM, error) {
 	// check if exists
 	vm, ok := vmsCache[machineName]
 	if !ok {
 		return nil, fmt.Errorf("machine name %v not exists", machineName)
 	}
 
-	if operation != "start" && operation != "shutdown" && operation != "reboot" {
-		return nil, fmt.Errorf("operation %v is not allowed, allowed operations are start, shutdown, reboot", operation)
+	var err error;
+	if(updateInput.Status != vm.Status) {
+		vm, err = storage.Operate(machineName, updateInput.Status)
+	}
+	
+	return vm, err;
+}
+
+func (storage CacheStorage) Operate(machineName string, newStatus string) (*VM, error) {
+	// check if exists
+	vm, ok := vmsCache[machineName]
+	if !ok {
+		return nil, fmt.Errorf("machine name %v not exists", machineName)
+	}
+
+	if newStatus != "Running" && newStatus != "Shutdown" { // TODO: how to handle rebooting by status?
+		return nil, fmt.Errorf("new status %v is not allowed, allowed new status are Running, Shutdown", newStatus)
 	}
 
 	switch vm.Status {
 	case "Provisioning", "Shutingdown", "Deleting", "Deleted":
 		return nil, fmt.Errorf("cannot update status for VM %v as its status is currently %v", machineName, vm.Status)
 	case "Shutdown":
-		if operation == "shutdown" {
-			return vm, nil
-		} else if operation == "start" {
+		if newStatus == "Running" {
 			// TODO: start VM async.
 			vm.Status = "Running"
 			return vm, nil
@@ -126,9 +139,7 @@ func (storage CacheStorage) Operate(machineName string, operation string) (*VM, 
 			return nil, fmt.Errorf("cannot reboot machine while its status is %v", vm.Status)
 		}
 	case "Running":
-		if operation == "start" {
-			return vm, nil // do nothing
-		} else if operation == "shutdown" {
+		if newStatus == "Shutdown" {
 			// TODO: stop VM async.
 			vm.Status = "Shuttingdown"
 			return vm, nil
